@@ -4,16 +4,16 @@
             <div class="col-9">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Adicionar Filme</h5>
+                        <h5 class="card-title">Editar Filme</h5>
 
                         <div class="mb-3 mt-3">
-                            <label for="movieName" class="form-label">Nome</label>
-                            <input type="text" class="form-control" id="movieName" placeholder="Pirates do Caribe">
+                            <label for="tagEditName" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="tagEditName" placeholder="Pirates do Caribe">
                         </div>
 
                         <div class="form-group mb-3 mt-3">
-                            <label for="movieFile">Upload de filme</label>
-                            <input @change="carregarFoto" type="file" class="form-control-file" id="movieFile" accept="video/*">
+                            <label for="tagEditFile">Upload de filme</label>
+                            <input type="file" class="form-control-file" id="tagEditFile" accept="video/*">
                         </div>
 
                         <div class="col-12 mt-1 text-end" >
@@ -28,6 +28,6 @@
 
 <script>
     export default{
-        name: 'CreateMovie' 
+        name: 'EditTag' 
     }
 </script>

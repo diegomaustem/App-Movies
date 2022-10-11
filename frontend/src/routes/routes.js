@@ -2,9 +2,11 @@
 
 import ListMovie from '../components/movies/ListMovie.vue'
 import CreateMovie from '../components/movies/CreateMovie.vue'
+import EditMovie from '../components/movies/EditMovie.vue'
 
 import ListTag from '../components/tags/ListTag.vue'
 import CreateTag from '../components/tags/CreateTag.vue'
+import EditTag from '../components/tags/EditTag.vue'
 
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -25,10 +27,12 @@ const routes = [
         path: '/tag/add',
         component: CreateTag
     },
-
-
-
-
+    {
+        name: 'EditTag',
+        path: '/tag/edit',
+        //  path: '/tag/:id/edit',
+        component: EditTag
+    },
     {
         name: 'ListMovie',
         path: '/movies',
@@ -38,6 +42,12 @@ const routes = [
         name: 'CreateMovie',
         path: '/movie/add',
         component: CreateMovie
+    },
+    {
+        name: 'EditMovie',
+        path: '/movie/edit',
+        //  path: '/tag/:id/edit',
+        component: EditMovie
     }
     
 ];

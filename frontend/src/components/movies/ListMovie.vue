@@ -26,7 +26,7 @@
                                         <td>12MB</td>
                                         <td>20/10/2015</td>
                                         <td>
-                                            <button type="button" @click="editMovie()" class="btn btn-warning">Editar</button>
+                                            <router-link :to='{name:"EditMovie"}' class="btn btn-warning">Editar</router-link>
                                             &nbsp;
                                             <button type="button" @click="deleteMovie()" class="btn btn-danger">Deletar</button>
                                         </td>
@@ -40,12 +40,6 @@
         </div>
     </div>
 </template>
-
-
-                
-   
-
-
 
 <script>
     export default {

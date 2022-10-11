@@ -22,7 +22,7 @@
                                         <td>Drama</td>
                                         <td>20/10/2015</td>
                                         <td>
-                                            <button type="button" @click="editTag()" class="btn btn-warning">Editar</button>
+                                            <router-link :to='{name:"EditTag"}' class="btn btn-warning">Editar</router-link>
                                             &nbsp;
                                             <button type="button" @click="deleteTag()" class="btn btn-danger">Deletar</button>
                                         </td>
@@ -36,8 +36,6 @@
         </div>
     </div>
 </template>
-
-
 
 <script>
     export default {
