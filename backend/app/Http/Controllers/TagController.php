@@ -16,6 +16,11 @@ class TagController extends Controller
 
     public function create(Request $request)
     {
+        // No implemented
+    }
+
+    public function store(Request $request)
+    {
         $tag = new Tag();
 
         $tag->name_tag = $request->name_tag;
@@ -25,28 +30,29 @@ class TagController extends Controller
         return response()->json($tag);
     }
 
-    public function store(Request $request)
+    public function show(Tag $tag)
     {
-
-    }
-
-    public function show()
-    {
-        
+        return response()->json($tag);
     }
 
     public function edit()
     {
-        //
+        // No implemented
     }
-
-    public function update()
-    {
     
+    public function update(Request $request, Tag $tag)
+    {
+        $tag->name_tag = $request->name_tag;
+
+        $tag->save();
+
+        return response()->json('Tag atualizada com sucesso.');
     }
 
-    public function destroy()
+    public function destroy(Tag $tag)
     {
+        $tag->delete();
 
+        return response()->json('Tag deletada com sucesso.');
     }
 }
