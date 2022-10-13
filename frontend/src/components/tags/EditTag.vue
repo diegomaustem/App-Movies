@@ -13,7 +13,7 @@
                             </div>
 
                             <div class="col-12 mt-1 text-end" >
-                                <button @click="updateTag" class="btn btn-primary">Salvar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
                             </div>
                         </form>
                     </div>
@@ -51,19 +51,18 @@
                 })
             },
             async updateTag(){
-                // Parei aqui :::
 
-                // // let url = 'http://127.0.0.1:8000/api/tag/'+this.$route.params.id
+                let url = 'http://127.0.0.1:8000/api/tag/'+this.$route.params.id
 
-                // await this.axios.post('http://127.0.0.1:8000/api/tag/'+this.$route.params.id, this.tag).then(response=>{
-                //     // this.$router.push({name:"ListTag"})
-                //      console.log(response)
-                // })
-                // // }).catch(error=>{
-                // //     console.log(error)
-                // // })
+                await axios.patch(url, this.tag).then(response=>{
+                    if(response.data.code == 200) {
+                        alert(response.data.message)
+                        this.$router.push({name:"ListTag"})
+                    }
+                }).catch(error=>{
+                    console.log(error)
+                }) 
             }
         }
-
     }
 </script>

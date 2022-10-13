@@ -10,7 +10,7 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        
+
         return response()->json($tags);
     }
 
@@ -39,7 +39,7 @@ class TagController extends Controller
     {
         // No implemented
     }
-    
+
     public function update(Request $request, Tag $tag)
     {
         $tag->name_tag = $request->name_tag;

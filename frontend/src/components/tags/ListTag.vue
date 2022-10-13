@@ -24,7 +24,7 @@
                                         <td>
                                             <router-link :to='{name:"EditTag" , params:{ id:tag.id } }' class="btn btn-warning">Editar</router-link>
                                             &nbsp;
-                                            <button type="button" @click="DeleteTag()" class="btn btn-danger">Deletar</button>
+                                            <button type="button" @click.prevent="deleteTag(tag.id)" class="btn btn-danger">Deletar</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -66,6 +66,22 @@
                 }).catch(error => {
                     console.log(error)
                 })
+            },
+            async deleteTag(id){
+
+                let url = 'http://127.0.0.1:8000/api/tag/'+id
+
+                if(confirm("Deseja excluir esta Tag ?")){
+
+                    axios.delete(url).then(response=>{
+                        if(response.data.code == 200) {
+                            alert(response.data.message)
+                            this.getTags();
+                        }
+                    }).catch(error=>{
+                        console.log(error)
+                    })
+                }
             }
         },
         mounted(){
