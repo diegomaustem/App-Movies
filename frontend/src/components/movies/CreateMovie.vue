@@ -9,7 +9,7 @@
 
                             <div class="mb-3 mt-3">
                                 <label for="movieName" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="movieName" placeholder="Pirates do Caribe">
+                                <input type="text" class="form-control" id="movieName" v-model="newMovie.name" placeholder="Pirates do Caribe">
                             </div>
                             
                             <div class="mb-3 mt-3">
@@ -47,7 +47,9 @@ export default {
     data() {
         return {
             selectedTags: [],
-            tags: []
+            tags: [],
+            newMovie:{ name:"", file:"", selectedTags:""}
+
         }
     },
     mounted(){
@@ -72,6 +74,20 @@ export default {
             }).catch(error=>{
                 console.log(error)
             })
+        },
+        async createMovie(){
+            
+            console.log(this.newMovie)
+            // let url = 'http://127.0.0.1:8000/api/tag'
+
+            // await axios.post(url, this.newMovie).then(response=>{
+            //     console.log(response)
+                
+            //     // if(response.data.code == 200) {
+            //     //     alert(response.data.message)
+            //     //     this.$router.push({name:"ListTag"})
+            //     // }
+            // })
         }
     }
 }
