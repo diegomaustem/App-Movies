@@ -29,8 +29,7 @@ const routes = [
     },
     {
         name: 'EditTag',
-        path: '/tag/edit',
-        //  path: '/tag/:id/edit',
+        path: '/tag/edit/:id',
         component: EditTag
     },
     {
@@ -46,7 +45,7 @@ const routes = [
     {
         name: 'EditMovie',
         path: '/movie/edit',
-        //  path: '/tag/:id/edit',
+        //  path: '/tag/edit',
         component: EditMovie
     }
     

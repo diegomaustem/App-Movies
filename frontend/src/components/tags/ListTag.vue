@@ -17,15 +17,20 @@
                                         <th scope="col">Ações</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Drama</td>
-                                        <td>20/10/2015</td>
+                                <tbody v-if="tags.length > 0">
+                                    <tr v-for="tag in tags" :key="tag.id">
+                                        <td>{{ tag.name_tag }}</td>
+                                        <td>{{ tag.created_at }}</td>
                                         <td>
-                                            <router-link :to='{name:"EditTag"}' class="btn btn-warning">Editar</router-link>
+                                            <router-link :to='{name:"EditTag" , params:{ id:tag.id } }' class="btn btn-warning">Editar</router-link>
                                             &nbsp;
-                                            <button type="button" @click="deleteTag()" class="btn btn-danger">Deletar</button>
+                                            <button type="button" @click="DeleteTag()" class="btn btn-danger">Deletar</button>
                                         </td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="4" align="center">Nenhuma Tag encontrada.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -38,7 +43,33 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
-        name: 'ListTag'
+        name: 'ListTag',
+
+        data(){
+            return{
+                tags:[]
+            }
+        },
+        created() {
+            this.getTags()
+        },
+        methods: {
+            async getTags() {
+
+                let url = 'http://127.0.0.1:8000/api/tag'
+
+                await axios.get(url).then(response => {
+                    this.tags = response.data
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
+        },
+        mounted(){
+            console.log('Sucesso.')
+        }
     }
 </script>
