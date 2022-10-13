@@ -27,7 +27,10 @@ class TagController extends Controller
 
         $tag->save();
 
-        return response()->json($tag);
+        return response()->json([
+            'message' => 'Tag criada com sucesso.',
+            'code' => 200
+        ]);
     }
 
     public function show(Tag $tag)
@@ -46,13 +49,28 @@ class TagController extends Controller
 
         $tag->save();
 
-        return response()->json('Tag atualizada com sucesso.');
+        return response()->json([
+            'message' => 'Tag atualizada com sucesso.',
+            'code' => 200
+        ]);
+
+        return response()->json('');
     }
 
-    public function destroy(Tag $tag)
+    public function destroy($id)
     {
-        $tag->delete();
+        $tag = Tag::find($id);
 
-        return response()->json('Tag deletada com sucesso.');
+        if($tag) {
+
+            $tag->delete();
+
+            return response()->json([
+                'message' =>'Tag excluída com sucesso.',
+                'code' => 200
+            ]);
+        } else {
+            return response()->json(['Não foi possível excluir Tag.']);
+        }
     }
 }
