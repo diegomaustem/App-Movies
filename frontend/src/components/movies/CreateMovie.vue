@@ -4,24 +4,28 @@
             <div class="col-9">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Adicionar Filme</h5>
+                        <form @submit.prevent="createMovie">
+                            <h5 class="card-title">Adicionar Filme</h5>
 
-                        <div class="mb-3 mt-3">
-                            <label for="movieName" class="form-label">Nome</label>
-                            <input type="text" class="form-control" id="movieName" placeholder="Pirates do Caribe">
-                        </div>
+                            <div class="mb-3 mt-3">
+                                <label for="movieName" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="movieName" placeholder="Pirates do Caribe">
+                            </div>
+                            
+                            <div class="mb-3 mt-3">
+                                <label for="movieTag" class="form-label">Tags</label>
+                                <Multiselect v-model="selectedTags" mode="tags" :close-on-select="false" :searchable="true" :create-option="true" :options="tags" placeholder="Nacionais"/>
+                            </div>
 
-                        <Multiselect v-model="selectedTags" mode="tags" :close-on-select="false" :searchable="true" :create-option="true" :options="tags"/>
+                            <div class="form-group mb-3 mt-3">
+                                <label for="movieFile" class="form-label">Upload de filme</label>
+                                <input @change="carregarFoto" type="file" class="form-control-file" id="movieFile" accept="video/*">
+                            </div>
 
-                        <div class="form-group mb-3 mt-3">
-                            <label for="movieFile">Upload de filme</label>
-                            <input @change="carregarFoto" type="file" class="form-control-file" id="movieFile" accept="video/*">
-                        </div>
-
-                        <div class="col-12 mt-1 text-end" >
-                            <router-link :to='{name:""}' class="btn btn-primary">Salvar</router-link>
-                        </div>
-
+                            <div class="col-12 mt-1 text-end" >
+                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>  
             </div>
@@ -55,7 +59,16 @@ export default {
             let url = 'http://127.0.0.1:8000/api/tag/'
 
             await axios.get(url).then(response=>{
-                console.log(response)
+                
+                let tagsTratation = []
+                response.data.forEach(tratationResponseTags);
+
+                function tratationResponseTags(tag, newTag){
+                    newTag = tag.name_tag
+                    tagsTratation.push(newTag)
+                }
+                this.tags = tagsTratation
+
             }).catch(error=>{
                 console.log(error)
             })
