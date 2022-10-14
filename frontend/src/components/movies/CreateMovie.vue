@@ -19,11 +19,11 @@
 
                             <div class="form-group mb-3 mt-3">
                                 <label for="movieFile" class="form-label">Upload de filme</label>
-                                <input @change="carregarFoto" type="file" class="form-control-file" id="movieFile" accept="video/*">
+                                <input @change="getFile" type="file" class="form-control-file" id="movieFile" accept="video/*">
                             </div>
 
                             <div class="col-12 mt-1 text-end" >
-                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
                             </div>
                         </form>
                     </div>
@@ -41,15 +41,15 @@ import axios from 'axios';
 export default {
 
     name: 'CreateMovie', 
+
     components: {
         Multiselect,
     },
     data() {
         return {
-            selectedTags: [],
+            selectedTags:[],
             tags: [],
-            newMovie:{ name:"", file:"", selectedTags:""}
-
+            newMovie:[]
         }
     },
     mounted(){
@@ -75,19 +75,19 @@ export default {
                 console.log(error)
             })
         },
-        async createMovie(){
-            
-            console.log(this.newMovie)
-            // let url = 'http://127.0.0.1:8000/api/tag'
 
-            // await axios.post(url, this.newMovie).then(response=>{
-            //     console.log(response)
-                
-            //     // if(response.data.code == 200) {
-            //     //     alert(response.data.message)
-            //     //     this.$router.push({name:"ListTag"})
-            //     // }
-            // })
+        getFile($file) {
+                this.newMovie.push($file.target.files[0])
+        },
+        async createMovie(){
+
+            console.log(this.newMovie)
+
+            this.newMovie.push(this.selectedTags)
+
+        },
+            clearAll () {
+            this.selectedTags = []
         }
     }
 }
