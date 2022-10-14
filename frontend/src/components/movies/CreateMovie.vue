@@ -49,7 +49,10 @@ export default {
         return {
             selectedTags:[],
             tags: [],
-            newMovie:[]
+            newMovie:{name:"", filme:[], selectedTags:[]
+        
+            }, teste:[]
+
         }
     },
     mounted(){
@@ -76,18 +79,20 @@ export default {
             })
         },
 
-        getFile($file) {
-                this.newMovie.push($file.target.files[0])
+        getFile(file) {
+            this.newMovie.filme.push(file.target.files[0])
+
+            this.teste.push(file.target.files[0])
         },
         async createMovie(){
 
-            console.log(this.newMovie)
+            let url = 'http://127.0.0.1:8000/api/movie/'
 
-            this.newMovie.push(this.selectedTags)
+            this.newMovie.selectedTags.push(this.selectedTags)
 
-        },
-            clearAll () {
-            this.selectedTags = []
+            await axios.post(url, this.newMovie).then(response=>{
+                console.log(response.data)
+            })
         }
     }
 }
