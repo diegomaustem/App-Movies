@@ -49,10 +49,7 @@ export default {
         return {
             selectedTags:[],
             tags: [],
-            newMovie:{name:"", filme:[], selectedTags:[]
-        
-            }, teste:[]
-
+            newMovie:{name:"", file:""}
         }
     },
     mounted(){
@@ -78,20 +75,27 @@ export default {
                 console.log(error)
             })
         },
-
         getFile(file) {
-            this.newMovie.filme.push(file.target.files[0])
-
-            this.teste.push(file.target.files[0])
+            this.newMovie.file = file.target.files[0]
         },
         async createMovie(){
 
+            let movie = new FormData()
+
+            movie.append('name',      this.newMovie.name)
+            movie.append('file',      this.newMovie.file)
+            movie.append('tags',      this.selectedTags)
+            movie.append('movieSize', this.newMovie.file.size)
+
             let url = 'http://127.0.0.1:8000/api/movie/'
 
-            this.newMovie.selectedTags.push(this.selectedTags)
-
-            await axios.post(url, this.newMovie).then(response=>{
-                console.log(response.data)
+            await axios.post(url, movie).then(response=>{
+                if(response.data.code == 200) {
+                    alert(response.data.message)
+                    this.$router.push({name:"ListMovie"})
+                }
+            }).catch(error=>{
+                console.log(error)
             })
         }
     }

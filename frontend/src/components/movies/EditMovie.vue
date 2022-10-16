@@ -8,7 +8,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="movieEditName" class="form-label">Nome</label>
-                            <input type="text" class="form-control" id="movieEditName" placeholder="Pirates do Caribe">
+                            <input type="text" class="form-control" id="movieEditName" placeholder="Pirates do Caribe" v-model="movie.name">
                         </div>
 
                         <div class="form-group mb-3 mt-3">
@@ -27,7 +27,36 @@
 </template>
 
 <script>
-    export default{
-        name: 'EditMovie' 
+
+    import axios from 'axios';
+
+    export default {
+
+        name: 'EditMovie',
+
+        data(){
+            return{
+                movie:{ name:"", _method:"patch" }
+            }
+        },
+        mounted(){
+            this.getMovieById();
+        },
+        methods: {
+            async getMovieById(){ 
+                
+                let url = 'http://127.0.0.1:8000/api/movie/'+this.$route.params.id
+
+                await axios.get(url).then(response=>{
+                    let { name } = response.data
+
+                   
+                    this.movie.name = name
+                    console.log(response.data)
+                }).catch(error=>{
+                    console.log(error)
+                })
+            }
+        }
     }
 </script>

@@ -13,20 +13,18 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Nome</th>
-                                        <th scope="col">Arquivo</th>
                                         <th scope="col">Tamanho Arquivo</th>
                                         <th scope="col">Data Cadastro</th>
                                         <th scope="col">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Pirates do Caribe</td>
-                                        <td>Video.JPEG</td>
-                                        <td>12MB</td>
-                                        <td>20/10/2015</td>
+                                    <tr v-for="movie in movies" :key="movie.id">
+                                        <td>{{ movie.name }}</td>
+                                        <td>{{ movie.file_size }}</td>
+                                        <td>{{ movie.created_at }}</td>
                                         <td>
-                                            <router-link :to='{name:"EditMovie"}' class="btn btn-warning">Editar</router-link>
+                                            <router-link :to='{name:"EditMovie" , params:{ id:movie.id } }' class="btn btn-warning">Editar</router-link>
                                             &nbsp;
                                             <button type="button" @click="deleteMovie()" class="btn btn-danger">Deletar</button>
                                         </td>
@@ -42,7 +40,34 @@
 </template>
 
 <script>
+
+    import axios from 'axios'
+
     export default {
-        name: 'ListMovie'
+        name: 'ListMovie',
+
+        data(){
+            return{
+                movies:[]
+            }
+        },
+        created() {
+            this.getTags()
+        },
+        methods: {
+
+            async getTags() {
+
+                let url = 'http://127.0.0.1:8000/api/movie'
+
+                await axios.get(url).then(response => {
+                    this.movies = response.data
+                    console.log(response.data)
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
+         }
     }
+
 </script>

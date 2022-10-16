@@ -44,8 +44,7 @@ const routes = [
     },
     {
         name: 'EditMovie',
-        path: '/movie/edit',
-        //  path: '/tag/edit',
+        path: '/movie/edit/:id',
         component: EditMovie
     }
     
