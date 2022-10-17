@@ -54,7 +54,7 @@ class TagController extends Controller
             'code' => 200
         ]);
 
-        return response()->json('');
+        return response()->json('Não foi possível atualizar Tag.');
     }
 
     public function destroy($id)
@@ -69,6 +69,7 @@ class TagController extends Controller
                 'message' =>'Tag excluída com sucesso.',
                 'code' => 200
             ]);
+
         } else {
             return response()->json(['Não foi possível excluir Tag.']);
         }
