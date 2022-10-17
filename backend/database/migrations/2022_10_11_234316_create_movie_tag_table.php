@@ -8,8 +8,8 @@ class CreateMovieTagTable extends Migration
 {
     public function up()
     {
-        Schema::create('movie_tag', function (Blueprint $table) {
-
+        Schema::create('movie_tags', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('movie_id')->constrained();
             $table->foreignId('tag_id')->constrained();
             $table->timestamps();
@@ -18,6 +18,6 @@ class CreateMovieTagTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('movie_tag');
+        Schema::dropIfExists('movie_tags');
     }
 }

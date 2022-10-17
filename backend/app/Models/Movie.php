@@ -9,6 +9,8 @@ class Movie extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'file', 'file_size'];
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class);

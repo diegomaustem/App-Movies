@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\MovieTag;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Exists;
 
@@ -18,22 +19,34 @@ class MovieController extends Controller
 
     public function store(Request $request)
     {
-        $movie = new Movie();
+        $movieTagsRequest = $request->tags;
+        $movieFileRequest = $request->file;
+        $movieSizeRequest = $request->movieSize;
+        $movieNameRequest = $request->name;
 
-        $movieTags = $request->tags;
-        $movieFile = $request->file;
-        $movieSize = $request->movieSize;
+        $movieFile  = $this->uploadMovie($movieFileRequest);
+        $movieSize  = $this->formatBytes($movieSizeRequest);
 
-        $movie->name      = $request->name;
-        $movie->file      = $this->uploadMovie($movieFile);
-        $movie->file_size = $this->formatBytes($movieSize);
+        $movie = [
+            'name'      => $movieNameRequest,
+            'file'      => $movieFile,
+            'file_size' => $movieSize
+        ];
 
-        $movie->save();
+        $idCreatedMovie = Movie::create($movie)->id;
 
-        return response()->json([
-            'message' => 'Filme criado com sucesso.',
-            'code' => 200
-        ]);
+        // Fazer a conversão de tag para id :::
+
+        $arr = array(1,2,3,4,5);
+        $movieTagsRequest = $arr;
+
+        $this->insertRelationMovieTag($idCreatedMovie, $movieTagsRequest);
+        // return response()->json([
+        //     'message' => 'Filme criado com sucesso.',
+        //     'code' => 200
+        // ]);
+
+        response()->json($movieTagsRequest);
     }
 
     public function show(Movie $movie)
@@ -53,9 +66,20 @@ class MovieController extends Controller
                 'message' =>'Filme excluído com sucesso.',
                 'code' => 200
             ]);
+
         } else {
             return response()->json(['Não foi possível excluir Filme.']);
         }
+    }
+
+    private function insertRelationMovieTag($idCreatedMovie, $movieTagsRequest)
+    {
+        $movieTag = new MovieTag();
+
+        $movieTag->movie_id = $idCreatedMovie;
+        $movieTag->tag_id   = 2;
+
+        $movieTag->save();
     }
 
     private function uploadMovie($movieFile)
@@ -72,7 +96,5 @@ class MovieController extends Controller
 
         return round($movieSize / (pow(1024, $exp)), $precision).$unit[$exp];
     }
-
-
 
 }
