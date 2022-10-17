@@ -49,10 +49,7 @@
 
                 await axios.get(url).then(response=>{
                     let { name } = response.data
-
-                   
                     this.movie.name = name
-                    console.log(response.data)
                 }).catch(error=>{
                     console.log(error)
                 })
