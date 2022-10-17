@@ -71,6 +71,8 @@ export default {
                 }
                 this.tags = tagsTratation
 
+                console.log(this.tags)
+
             }).catch(error=>{
                 console.log(error)
             })

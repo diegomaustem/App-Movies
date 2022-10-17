@@ -72,7 +72,7 @@
 
                 let url = 'http://127.0.0.1:8000/api/tag/'+id
 
-                if(confirm("Deseja excluir esta Tag ?")){
+                if(confirm("Deseja excluir esta Tag?")){
 
                     axios.delete(url).then(response=>{
                         if(response.data.code == 200) {
@@ -84,9 +84,6 @@
                     })
                 }
             }
-        },
-        mounted(){
-            console.log('Sucesso.')
         }
     }
 </script>
