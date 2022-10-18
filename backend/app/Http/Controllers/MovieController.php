@@ -9,7 +9,6 @@ use Illuminate\Validation\Rules\Exists;
 
 class MovieController extends Controller
 {
-
     public function index()
     {
         $movies = Movie::all();
@@ -24,29 +23,24 @@ class MovieController extends Controller
         $movieSizeRequest = $request->movieSize;
         $movieNameRequest = $request->name;
 
-        $movieFile  = $this->uploadMovie($movieFileRequest);
-        $movieSize  = $this->formatBytes($movieSizeRequest);
+        $movieFile               = $this->uploadMovie($movieFileRequest);
+        $movieSize               = $this->formatBytes($movieSizeRequest);
+        $movieTagsRequestTreated = $this->treatmentIdTags($movieTagsRequest);
 
         $movie = [
             'name'      => $movieNameRequest,
             'file'      => $movieFile,
-            'file_size' => $movieSize
+            'file_size' => $movieSize,
         ];
 
         $idCreatedMovie = Movie::create($movie)->id;
 
-        // Fazer a conversão de tag para id :::
+        $this->insertRelationMovieTag($idCreatedMovie, $movieTagsRequestTreated);
 
-        $arr = array(1,2,3,4,5);
-        $movieTagsRequest = $arr;
-
-        $this->insertRelationMovieTag($idCreatedMovie, $movieTagsRequest);
-        // return response()->json([
-        //     'message' => 'Filme criado com sucesso.',
-        //     'code' => 200
-        // ]);
-
-        response()->json($movieTagsRequest);
+        return response()->json([
+            'message' => 'Filme criado com sucesso.',
+            'code' => 200
+        ]);
     }
 
     public function show(Movie $movie)
@@ -56,7 +50,7 @@ class MovieController extends Controller
 
     public function destroy($id)
     {
-        $movie = Movie::find($id);
+        $movie    = Movie::find($id);
 
         if($movie) {
 
@@ -72,14 +66,24 @@ class MovieController extends Controller
         }
     }
 
-    private function insertRelationMovieTag($idCreatedMovie, $movieTagsRequest)
+    private function insertRelationMovieTag($idCreatedMovie, $movieTagsRequestTreated)
     {
-        $movieTag = new MovieTag();
+        foreach($movieTagsRequestTreated as $TagTreated){
 
-        $movieTag->movie_id = $idCreatedMovie;
-        $movieTag->tag_id   = 2;
+            $movieTag = new MovieTag();
 
-        $movieTag->save();
+            $movieTag->movie_id = $idCreatedMovie;
+            $movieTag->tag_id   = $TagTreated;
+
+            $movieTag->save();
+        }
+    }
+
+    private function treatmentIdTags($movieTagsRequest)
+    {
+        $movieTagsRequest = str_split(str_replace("-","",filter_var($movieTagsRequest, FILTER_SANITIZE_NUMBER_INT)));
+
+        return $movieTagsRequest;
     }
 
     private function uploadMovie($movieFile)

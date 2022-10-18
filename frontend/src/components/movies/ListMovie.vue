@@ -79,7 +79,7 @@
                     axios.delete(url).then(response=>{
                         if(response.data.code == 200) {
                             alert(response.data.message)
-                            this.getMovies();
+                            this.getMovies()
                         }
                     }).catch(error=>{
                         console.log(error)

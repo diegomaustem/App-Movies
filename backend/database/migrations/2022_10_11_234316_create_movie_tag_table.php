@@ -10,7 +10,7 @@ class CreateMovieTagTable extends Migration
     {
         Schema::create('movie_tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('movie_id')->constrained();
+            $table->foreignId('movie_id')->constrained()->onDelete('cascade');
             $table->foreignId('tag_id')->constrained();
             $table->timestamps();
         });
@@ -21,3 +21,6 @@ class CreateMovieTagTable extends Migration
         Schema::dropIfExists('movie_tags');
     }
 }
+
+
+// $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

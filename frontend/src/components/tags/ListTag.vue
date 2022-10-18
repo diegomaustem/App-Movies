@@ -20,7 +20,7 @@
                                 <tbody v-if="tags.length > 0">
                                     <tr v-for="tag in tags" :key="tag.id">
                                         <td>{{ tag.name_tag }}</td>
-                                        <td>{{ tag.created_at }}</td>
+                                        <td>{{ tag.created_at }}</td> 
                                         <td>
                                             <router-link :to='{name:"EditTag" , params:{ id:tag.id } }' class="btn btn-warning">Editar</router-link>
                                             &nbsp;

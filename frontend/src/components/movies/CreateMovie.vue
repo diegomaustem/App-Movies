@@ -61,17 +61,17 @@ export default {
             let url = 'http://127.0.0.1:8000/api/tag/'
 
             await axios.get(url).then(response=>{
-                
+                                
                 let tagsTratation = []
+
                 response.data.forEach(tratationResponseTags);
 
                 function tratationResponseTags(tag, newTag){
-                    newTag = tag.name_tag
+                    newTag = tag.id +'-'+ tag.name_tag
                     tagsTratation.push(newTag)
                 }
-                this.tags = tagsTratation
 
-                console.log(this.tags)
+                this.tags = tagsTratation
 
             }).catch(error=>{
                 console.log(error)
@@ -81,7 +81,7 @@ export default {
             this.newMovie.file = file.target.files[0]
         },
         async createMovie(){
-
+            
             let movie = new FormData()
 
             movie.append('name',      this.newMovie.name)
